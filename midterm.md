@@ -212,7 +212,53 @@
     ```
     
     _Nếu bạn có $\exists x \, \phi$. Bạn bắt đầu một "chứng minh con" bằng cách giả sử $\phi$ đúng cho một phần tử _hoàn toàn mới_ $x_0$ (tức là giả sử $\phi[x \Rightarrow x_0]$). Nếu bạn có thể suy ra một kết luận $\chi$ _không chứa $x_0$ tự do_ từ giả sử này, thì bạn có thể kết luận $\chi$ bên ngoài hộp. (Biến $x_0$ phải _fresh_, không xuất hiện tự do trong $\exists x \, \phi$, $\chi$, hay các giả thiết khác đang dùng ngoài giả thiết $\phi[x \Rightarrow x_0]$)._
-    
+
+
+## Models trong Logic Vị từ
+
+**Mục đích:** Model (Mô hình) cung cấp **ngữ nghĩa** (meaning) cụ thể cho các ký hiệu trong một ngôn ngữ logic vị từ. Nó định nghĩa "thế giới" mà các công thức logic sẽ được diễn giải là đúng hay sai.
+
+**Thành phần của Model $\mathcal{M}$:** Cho một tập ký hiệu hàm $\mathcal{F}$ và tập ký hiệu vị từ $\mathcal{P}$, một model $\mathcal{M}$ cho $(\mathcal{F}, \mathcal{P})$ bao gồm:
+
+1.  **Universe (Không gian mẫu) $A$:** Một tập hợp **không rỗng** chứa các đối tượng mà logic đang nói đến (ví dụ: tập số tự nhiên $\mathbb{N}$, tập các chuỗi nhị phân, tập hợp người,...).
+2.  **Interpretation (Diễn giải) cho Ký hiệu hàm $f \in \mathcal{F}$:**
+    * **Hằng số (Arity 0):** Mỗi ký hiệu hằng $c \in \mathcal{F}$ được gán một **phần tử cụ thể** $c^{\mathcal{M}} \in A$.
+    * **Hàm (Arity $n > 0$):** Mỗi ký hiệu hàm $f \in \mathcal{F}$ với arity $n$ được gán một **hàm cụ thể** $f^{\mathcal{M}}: A^n \to A$.
+3.  **Interpretation cho Ký hiệu vị từ $P \in \mathcal{P}$:**
+    * Mỗi ký hiệu vị từ $P \in \mathcal{P}$ với arity $n > 0$ được gán một **quan hệ (tập con)** $P^{\mathcal{M}} \subseteq A^n$. $P^{\mathcal{M}}$ chứa các bộ $(a_1, ..., a_n)$ các phần tử từ $A$ mà làm cho vị từ $P$ đúng.
+
+**Ví dụ:**
+
+* Ngôn ngữ: $\mathcal{F} = \{0, succ\}$, $\mathcal{P} = \{Even\}$ (0 là hằng, succ là hàm 1 ngôi, Even là vị từ 1 ngôi).
+* Model $\mathcal{M}$:
+    * Universe $A = \mathbb{N} = \{0, 1, 2, ...\}$.
+    * $0^{\mathcal{M}} = 0$ (số không).
+    * $succ^{\mathcal{M}}(n) = n + 1$ (hàm cộng thêm 1).
+    * $Even^{\mathcal{M}} = \{n \in \mathbb{N} \mid n \text{ là số chẵn}\} = \{0, 2, 4, ...\}$.
+
+**Environment (Môi trường) $l$:**
+
+* Để xử lý các **biến tự do** (free variables) trong công thức, ta cần một môi trường $l$.
+* $l$ là một hàm ánh xạ từ tập các biến (var) vào universe $A$ ($l: \text{var} \to A$). Nó gán giá trị cụ thể trong $A$ cho mỗi biến.
+* Ký hiệu $l[x \mapsto a]$: Môi trường giống $l$ ngoại trừ việc biến $x$ được gán giá trị $a$.
+
+**Satisfaction Relation (Quan hệ thỏa mãn) $\mathcal{M} \models_l \phi$:**
+
+Đọc là: "Model $\mathcal{M}$ **thỏa mãn** công thức $\phi$ dưới môi trường $l$". Nó định nghĩa khi nào một công thức là đúng trong model:
+
+* **Vị từ:** $\mathcal{M} \models_l P(t_1, ..., t_n)$ nếu bộ giá trị $(a_1, ..., a_n)$ (kết quả của việc tính các term $t_1, ..., t_n$ trong $\mathcal{M}$ dưới $l$) thuộc về $P^{\mathcal{M}}$.
+* **Phủ định:** $\mathcal{M} \models_l \neg \psi$ nếu $\mathcal{M} \models_l \psi$ không đúng.
+* **Hội:** $\mathcal{M} \models_l \psi_1 \land \psi_2$ nếu cả $\mathcal{M} \models_l \psi_1$ và $\mathcal{M} \models_l \psi_2$ đều đúng.
+* **Tuyển:** $\mathcal{M} \models_l \psi_1 \lor \psi_2$ nếu ít nhất một trong $\mathcal{M} \models_l \psi_1$ hoặc $\mathcal{M} \models_l \psi_2$ đúng.
+* **Kéo theo:** $\mathcal{M} \models_l \psi_1 \to \psi_2$ nếu $\mathcal{M} \models_l \psi_1$ sai hoặc $\mathcal{M} \models_l \psi_2$ đúng.
+* **Với mọi ($\forall$):** $\mathcal{M} \models_l \forall x \psi$ nếu $\mathcal{M} \models_{l[x \mapsto a]} \psi$ đúng **với mọi** phần tử $a \in A$.
+* **Tồn tại ($\exists$):** $\mathcal{M} \models_l \exists x \psi$ nếu $\mathcal{M} \models_{l[x \mapsto a]} \psi$ đúng với **ít nhất một** phần tử $a \in A$.
+
+**Sentence (Câu đóng):**
+
+* Nếu công thức $\phi$ **không có biến tự do**, nó được gọi là một câu đóng (sentence).
+* Đối với câu đóng, việc $\mathcal{M} \models_l \phi$ đúng hay sai **không phụ thuộc** vào môi trường $l$.
+* Ta có thể viết gọn là $\mathcal{M} \models \phi$ (model $\mathcal{M}$ thỏa mãn câu $\phi$).
 ----------
 # Hoare Triples
 
