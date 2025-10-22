@@ -1,5 +1,3 @@
-# Cheat-Sheet-Mo-Hinh-Hoa
-
 
 
 ## Dạng 1: Tìm số điểm cực biên (Extreme Points) TỐI ĐA
@@ -214,9 +212,59 @@ $$\text{Minimize } Z = \sum_{i=1}^{n} \sum_{j=1}^{n} c_{ij} x_{ij}$$
 -   **Giải pháp:** Gán chi phí cho ô đó $c_{ij} = \infty$ (hoặc một số $M$ rất lớn) để thuật toán tự động "tránh" chọn ô này.
     
 ----------
+## 1. Lý thuyết Quy hoạch tuyến tính (LP)
 
-## 1. Phương pháp Đơn hình (Simplex Method)
+-   **Định nghĩa:** Tối ưu (tối đa hóa hoặc tối thiểu hóa) một hàm mục tiêu **tuyến tính** dưới các ràng buộc **tuyến tính** (bất đẳng thức hoặc đẳng thức). Các biến quyết định thường là **liên tục** và không âm ($x \ge 0$).
+    
+-   **Các dạng:**
+    
+    -   Dạng chuẩn (Standard Form): Thường dùng cho phương pháp Simplex.
+        
+        $min \ c^T x$
+        
+        s.t. $Ax = b$
+        
+        $x \ge 0$
+        
+        (Lưu ý: Bất đẳng thức được chuyển thành đẳng thức bằng cách thêm/bớt biến bù - slack/surplus variables).
+        
+    -   **Dạng chính tắc (Canonical Form):** Thường là $min \ c^T x$ s.t. $Ax \le b, x \ge 0$ hoặc $max \ c^T x$ s.t. $Ax \le b, x \ge 0$.
+        
+    -   **Dạng tổng quát:** Kết hợp các ràng buộc $=, \le, \ge$.
+        
+-   **Tính chất hình học:**
+    
+    -   Miền khả thi (Feasible Region) là một tập lồi đa diện (convex polyhedron).
+        
+    -   Nếu tồn tại nghiệm tối ưu và miền khả thi có điểm cực biên (extreme point/vertex), thì ít nhất một nghiệm tối ưu nằm tại một điểm cực biên.
+        
+    -   Điểm cực biên (extreme point/vertex/corner point) tương đương với Nghiệm cơ bản khả thi (Basic Feasible Solution - BFS).
+        
+-   **Điều kiện tồn tại nghiệm tối ưu:**
+    
+    -   Một bài toán LPTT có nghiệm tối ưu KHI VÀ CHỈ KHI miền khả thi không rỗng VÀ hàm mục tiêu bị chặn trên miền khả thi đó.
+        
+-   **Miền khả thi & Nghiệm tối ưu:**
+    
+    -   Miền khả thi bị chặn luôn có cả giá trị lớn nhất (max) và nhỏ nhất (min).
+        
+    -   Miền khả thi không bị chặn có thể có max hoặc min, nhưng không bao giờ có cả hai.
+        
+    -   Nếu tồn tại, nghiệm tối ưu (max/min) luôn luôn xảy ra tại ít nhất một đỉnh (extreme point / vertex) của miền khả thi. (Câu 14 - ý I)
+        
+    -   Nghiệm tối ưu **không bao giờ** nằm _bên trong_ miền khả thi. (Câu 14 - ý III)
+        
+    -   Có thể nằm trên _cạnh_ (không phải đỉnh) nếu có vô số nghiệm tối ưu.
+        
+-   **Phép biến đổi:** $\min(Z)$ tương đương với $\max(-Z)$. (Câu 31)
+    
 
+----------
+
+## 2. Phương pháp Đơn hình (Simplex Method) - Dùng cho LP
+
+-   **Ý tưởng:** Di chuyển giữa các BFS kề nhau trên biên của miền khả thi, mỗi bước cải thiện giá trị hàm mục tiêu, cho đến khi đạt tối ưu.
+    
 -   **Biến cơ sở (Basic Variable):**
     
     -   Chi phí rút gọn (Reduced Cost) **luôn bằng 0**. (Câu 13)
@@ -227,88 +275,136 @@ $$\text{Minimize } Z = \sum_{i=1}^{n} \sum_{j=1}^{n} c_{ij} x_{ij}$$
     
     -   Giá trị (Value) của chúng **luôn bằng 0**. (Câu 20)
         
-    -   Chi phí rút gọn của chúng (hàng $Z_j - C_j$ hoặc $\Delta$) cho biết tính tối ưu.
+    -   Chi phí rút gọn của chúng (hàng $Z_j - C_j$ hoặc $r_N$) cho biết tính tối ưu.
         
--   **Nghiệm cơ sở (Basic Solution):**
+-   **Nghiệm cơ bản (Basic Solution):**
     
-    -   Tìm bằng cách cho $n-m$ biến (phi cơ sở) bằng 0 và giải hệ $m$ phương trình cho $m$ biến còn lại. (Câu 32)
+    -   Tìm bằng cách cho $n-m$ biến (phi cơ sở) bằng 0 và giải hệ $m$ phương trình cho $m$ biến còn lại ($x_N=0 \implies x_B = B^{-1}b$). (Câu 32)
         
-    -   Nghiệm cơ sở có thể **không khả thi** (not feasible) nếu có giá trị âm. (Câu 20)
+    -   Nghiệm cơ bản có thể **không khả thi** (not feasible) nếu có giá trị âm ($x_B = B^{-1}b \not\ge 0$). (Câu 20)
         
--   **Nghiệm cơ sở khả thi (BFS):**
+-   **Nghiệm cơ bản khả thi (BFS):**
     
-    -   Là một nghiệm cơ sở mà tất cả các biến $\ge 0$. (Câu 33)
+    -   Là một nghiệm cơ bản mà tất cả các biến $\ge 0$ ($x_B = B^{-1}b \ge 0$). (Câu 33)
         
-    -   Thuật toán Đơn hình di chuyển giữa các BFS.
+    -   Thuật toán Đơn hình di chuyển giữa các BFS kề nhau.
+        
+-   **Bảng đơn hình (Tableau):**
+    
+    -   Đưa LP về dạng chuẩn ($Ax=b, x \ge 0$). Lập bảng ban đầu.
+        
+    -   Dòng cuối cùng chứa hệ số của hàm mục tiêu (viết lại dạng $Z - c^T x = 0$).
         
 -   **Điều kiện tối ưu (Dừng thuật toán):** (Câu 35)
     
     1.  **Khả thi:** Cột vế phải (RHS) $\ge 0$. (Câu 34)
         
-    2.  **Tối ưu:** Hàng chi phí rút gọn thỏa mãn:
+    2.  **Tối ưu:** Hàng chi phí rút gọn ($r_N$ hoặc $\Delta$) thỏa mãn:
         
         -   **Bài toán MIN:** Tất cả chi phí rút gọn $\ge 0$.
             
         -   **Bài toán MAX:** Tất cả chi phí rút gọn $\le 0$.
             
+-   **Các bước lặp (Bài toán MIN):**
+    
+    1.  **Chọn biến vào (Entering Variable):** Chọn cột có chi phí rút gọn _âm nhất_ trong dòng cuối cùng. Cột tương ứng là _cột xoay_.
+        
+    2.  **Chọn biến ra (Leaving Variable):** Tính tỷ số $\lambda$ = (Cột RHS) / (Phần tử dương trong cột xoay). Chọn dòng có tỷ số $\lambda$ _không âm nhỏ nhất_. Dòng tương ứng là _dòng xoay_. Phần tử xoay là giao của dòng và cột xoay.
+        
+    3.  **Phép xoay (Pivoting):** Biến đổi dòng để phần tử xoay thành 1, các phần tử khác trong cột xoay thành 0. Cập nhật bảng. Lặp lại từ Bước 1.
+        
 -   **Dấu hiệu nghiệm không bị chặn (Unbounded):** (Câu 19)
     
-    -   Khi đã chọn cột trụ (biến đi vào), nhưng **tất cả hệ số trong cột đó đều $\le 0$**.
+    -   Khi đã chọn cột xoay (biến vào), nhưng **tất cả hệ số trong cột đó đều $\le 0$**.
         
-    -   Điều này có nghĩa là không thể thực hiện phép thử tỉ lệ (ratio test) để chọn dòng trụ.
+    -   Không thể thực hiện phép thử tỉ lệ (ratio test) để chọn dòng xoay.
         
--   **Kiểm tra một điểm có phải BFS tối ưu không:** (Câu 18)
+-   **Kiểm tra một điểm có phải BFS tối ưu không (Bài MIN):** (Câu 18)
     
-    1.  **Kiểm tra Khả thi:** Thay điểm vào _tất cả_ ràng buộc (bao gồm $x_i \ge 0$). Phải thỏa mãn hết.
+    1.  **Kiểm tra Khả thi:** Thay điểm vào _tất cả_ ràng buộc (kể cả $x_i \ge 0$). Phải thỏa mãn hết.
         
-    2.  **Kiểm tra Cơ sở:** Các biến $> 0$ là biến cơ sở, biến $= 0$ là phi cơ sở. Ma trận cột $A$ ứng với các biến cơ sở phải khả nghịch (độc lập tuyến tính).
+    2.  **Kiểm tra Cơ sở:** Các biến $> 0$ là biến cơ sở, biến $= 0$ là phi cơ sở. Ma trận cột $A$ ứng với các biến cơ sở ($B$) phải khả nghịch ($\det(B) \ne 0$).
         
-    3.  **Kiểm tra Tối ưu (cho bài MIN):** Tính chi phí rút gọn $\bar{c}_j = c_j - c_B^T B^{-1} A_j$ cho _tất cả các biến phi cơ sở_. Nếu tất cả $\bar{c}_j \ge 0$ thì là tối ưu.
+    3.  **Kiểm tra Tối ưu:** Tính chi phí rút gọn $r_j = c_j - c_B^T B^{-1} A_j$ cho _tất cả các biến phi cơ sở $x_j$_. Nếu tất cả $r_j \ge 0$ thì là tối ưu.
         
 
 ----------
 
-## 2. Lý thuyết Quy hoạch tuyến tính (LP)
+## 3. Quy hoạch nguyên (Integer Linear Programming - ILP)
 
--   **Định lý cơ bản:** Nếu một bài toán QHTT có nghiệm tối ưu, thì **ít nhất một** nghiệm tối ưu phải nằm tại **đỉnh (corner/vertex)** của miền khả thi. (Câu 14 - ý I)
+-   **Định nghĩa:** Bài toán LP trong đó một phần hoặc tất cả các biến quyết định phải nhận giá trị **nguyên**.
     
--   **Nghiệm tối ưu:**
+-   **Các loại:**
     
-    -   **Không bao giờ** nằm _bên trong_ miền khả thi. (Câu 14 - ý III)
+    -   **ILP thuần túy (Pure ILP):** Tất cả các biến là số nguyên ($x \in \mathbb{Z}^n$).
         
-    -   Có thể nằm trên _cạnh_ (không phải đỉnh) nếu có vô số nghiệm tối ưu. (Câu 14 - ý II sai)
+    -   **ILP hỗn hợp (Mixed ILP - MILP):** Một số biến nguyên, một số biến liên tục.
         
--   **Phép biến đổi:** $\min(Z)$ tương đương với $\max(-Z)$. (Câu 31)
+    -   **ILP nhị phân (Binary ILP - BIP):** Tất cả các biến chỉ nhận giá trị 0 hoặc 1 ($x \in \{0, 1\}^n$).
+        
+-   **Nới lỏng LP (LP Relaxation):** Bỏ qua ràng buộc nguyên của các biến (ví dụ: $x_i \in \{0, 1\}$ trở thành $0 \le x_i \le 1$).
+    
+-   **Tính chất:** Giá trị tối ưu của LP relaxation là một **chặn** (cận trên $UB$ cho bài toán max, cận dưới $LB$ cho bài toán min) cho giá trị tối ưu của ILP ($Z_{LP} \ge Z_{IP}$ cho bài toán max). Nếu nghiệm tối ưu của LP relaxation là nguyên, nó cũng là nghiệm tối ưu cho ILP.
     
 
 ----------
 
-## 3. Nhánh và Cận (Branch and Bound - B&B)
+## 4. Nhánh và Cận (Branch and Bound - B&B) - Dùng cho ILP
 
--   **Mục đích:** Giải bài toán Quy hoạch _nguyên_ (Integer Programming).
+-   **Mục đích:** Giải bài toán Quy hoạch _nguyên_ (ILP).
     
--   **Bước đầu tiên (Nút gốc):** (Câu 2, 30)
+-   **Ý tưởng:** Chia bài toán ILP thành các bài toán con nhỏ hơn (**nhánh** - branch), và sử dụng nghiệm của LP relaxation để loại bỏ các nhánh không chứa nghiệm tối ưu (**cận** - bound).
     
-    -   **Nới lỏng tuyến tính (LP Relaxation):** Bỏ (drop) ràng buộc $x$ phải là số nguyên.
+-   **Bước đầu tiên (Nút gốc - Root Node):** (Câu 2, 30)
+    
+    -   Giải **nới lỏng tuyến tính (LP Relaxation)** của bài toán gốc.
         
-    -   Giải bài toán QHTT nới lỏng đó để có cận đầu tiên (ví dụ: Cận trên $UB$ cho bài toán MAX).
+    -   Giá trị tối ưu $Z_{LP}$ là cận đầu tiên (UB cho max, LB cho min).
         
 -   **Các cận (cho bài toán MAX):**
     
-    -   **Cận trên (Upper Bound - UB):** Giá trị của nghiệm nới lỏng LP (luôn $\ge$ nghiệm nguyên tốt nhất).
+    -   **Cận trên (Upper Bound - UB):** Giá trị $Z_{LP}$ của nghiệm nới lỏng LP tại một nút (luôn $\ge$ nghiệm nguyên tốt nhất trong nhánh đó).
         
-    -   **Cận dưới (Lower Bound - LB):** Giá trị của nghiệm _nguyên_ khả thi tốt nhất tìm được cho đến nay.
+    -   **Cận dưới (Lower Bound - LB):** Giá trị $Z^*$ của nghiệm _nguyên_ khả thi tốt nhất tìm được cho đến nay (incumbent). Khởi tạo $Z^* = -\infty$ cho bài toán max.
         
--   **Quy tắc cắt tỉa (Dừng nhánh):** (Câu 28)
+-   **Quy tắc cắt tỉa / Loại bỏ nút (Fathoming/Pruning):** (Câu 28) Dừng xét một nhánh (nút) khi:
     
-    -   Dừng nhánh (không xét tiếp) khi:
+    1.  **Bởi Cận:** Cận của nút không tốt hơn incumbent ($UB \le LB$ cho bài toán MAX). Nhánh này không có khả năng cho nghiệm tốt hơn nghiệm nguyên đã tìm thấy.
         
-        1.  **Cận trên $\le$ Cận dưới ($UB \le LB$):** Nhánh này không có khả năng cho nghiệm tốt hơn nghiệm nguyên đã tìm thấy.
-            
-        2.  Bài toán nới lỏng tại nút đó vô nghiệm.
-            
-        3.  Bài toán nới lỏng cho ra nghiệm nguyên (cập nhật $LB$ nếu tốt hơn).
-            
+    2.  **Bởi Tính không khả thi:** Bài toán nới lỏng LP tại nút đó vô nghiệm.
+        
+    3.  **Bởi Nghiệm nguyên:** Bài toán nới lỏng LP cho ra nghiệm nguyên. Nếu tốt hơn incumbent, cập nhật incumbent ($LB$ hoặc $Z^*$).
+        
+-   **Phân nhánh (Branching):**
+    
+    -   Nếu một nút không bị loại bỏ và nghiệm LP relaxation $x_{LP}$ của nó không nguyên.
+        
+    -   Chọn một biến $x_k$ có giá trị không nguyên $v_k$ (ví dụ: biến "phân số nhất").
+        
+    -   Tạo ra hai bài toán con mới bằng cách thêm ràng buộc: $x_k \le \lfloor v_k \rfloor$ và $x_k \ge \lceil v_k \rceil$ (hoặc $x_k=0$ và $x_k=1$ cho BIP).
+        
+-   **Kết thúc:** Khi không còn nút nào đang hoạt động (chưa bị loại bỏ). Incumbent cuối cùng là nghiệm tối ưu.
+    
+
+----------
+
+## 5. Một số mô hình ILP/BIP phổ biến
+
+-   **Bài toán Cái túi (Knapsack Problem - 0-1):** Chọn các vật phẩm (giá trị $v_j$, trọng lượng $w_j$) để tối đa tổng giá trị $\sum v_j x_j$ mà tổng trọng lượng $\sum w_j x_j \le b$, với $x_j \in \{0, 1\}$. Ứng dụng trong Lập ngân sách vốn (Capital Budgeting).
+    
+-   **Bài toán Phủ tập hợp (Set Covering):** Chọn ít nhất một phương án để "phủ" các yêu cầu với chi phí tối thiểu $\sum_{j} c_j x_j$ s.t. $\sum_{j \in S_i} x_j \ge 1$ cho mỗi yêu cầu $i$, $x_j \in \{0, 1\}$. (Ví dụ: đồn cảnh sát).
+    
+-   **Bài toán Định vị cơ sở (Facility Location):** Quyết định mở cơ sở ở đâu ($x_j \in \{0, 1\}$) và phân bổ khách hàng $i$ đến cơ sở $j$ ($y_{ij}$) thế nào để tối thiểu chi phí.
+    
+-   **Bài toán Vận tải (Transportation):** Tối thiểu chi phí vận chuyển hàng từ nguồn $i$ (cung $r_i$) đến đích $j$ (cầu $d_j$). Biến $x_{ij}$ là lượng vận chuyển. Ràng buộc cung $\sum_j x_{ij} \le r_i$ và cầu $\sum_i x_{ij} \ge d_j$. Có thể là LP hoặc ILP. Bài toán cân bằng nếu $\sum r_i = \sum d_j$.
+    
+-   **Kỹ thuật mô hình hóa nhị phân:**
+    
+    -   Ràng buộc phủ ($\sum x_i \ge 1$), đóng gói ($\sum x_i \le 1$), phân hoạch ($\sum x_i = 1$).
+        
+    -   Ràng buộc phụ thuộc ($x_i \le x_j$ - nếu chọn i thì phải chọn j).
+        
+    -   Ràng buộc "hoặc/hoặc", "nếu-thì".
 
 ----------
 
@@ -525,43 +621,6 @@ $$\text{Minimize } Z = \sum_{i=1}^{n} \sum_{j=1}^{n} c_{ij} x_{ij}$$
     
     _Nếu bạn có $\exists x \, \phi$. Bạn bắt đầu một "chứng minh con" bằng cách giả sử $\phi$ đúng cho một phần tử _hoàn toàn mới_ $x_0$ (tức là giả sử $\phi[x \Rightarrow x_0]$). Nếu bạn có thể suy ra một kết luận $\chi$ _không chứa $x_0$ tự do_ từ giả sử này, thì bạn có thể kết luận $\chi$ bên ngoài hộp. (Biến $x_0$ phải _fresh_, không xuất hiện tự do trong $\exists x \, \phi$, $\chi$, hay các giả thiết khác đang dùng ngoài giả thiết $\phi[x \Rightarrow x_0]$)._
     
-
-----------
-Điều kiện tối ưu:
-- Một bài toán Lập trình tuyến tính (LPTT) có nghiệm tối ưu KHI VÀ CHỈ KHI miền khả thi (feasible set) không rỗng VÀ hàm mục tiêu (objective function) bị chặn (trên miền khả thi đó).
-
-Miền khả thi & Nghiệm tối ưu:
-- Miền khả thi bị chặn luôn có cả giá trị lớn nhất (max) và nhỏ nhất (min).
-- Miền khả thi không bị chặn có thể có max hoặc min, nhưng không bao giờ có cả hai.
-
-- Nếu tồn tại, nghiệm tối ưu (max/min) luôn luôn xảy ra tại ít nhất một đỉnh (extreme point / vertex) của miền khả thi.
-
-  
-
-Nghiệm cơ bản khả thi (Basic Feasible Solution - BFS):
-
-  
-
-- Là một nghiệm mà tại đó:
-
-- Các biến không cơ bản (non-basic variables) có giá trị bằng 0.
-
-- Các biến cơ bản (basic variables) có giá trị không âm (>= 0).
-
-  
-
-Phương pháp Đơn hình (Simplex Method):
-
-  
-
-- Chi phí rút gọn (Reduced Cost):
-
-- Dùng để kiểm tra điều kiện tối ưu tại nghiệm cơ bản khả thi hiện tại.
-
-- Chi phí rút gọn của các biến cơ bản (basic variables) luôn bằng 0.
-
-Dưới đây là tóm tắt kiến thức Logic Hoare (bản không chứa trích nguồn) để bạn tiện sao chép vào "cheat sheet".
-
 ----------
 # Hoare Triples
 
