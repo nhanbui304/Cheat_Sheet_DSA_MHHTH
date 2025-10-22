@@ -563,25 +563,6 @@ $(| \phi |) C (| \psi |)$
 
 ----------
 
-## 5. Một số mô hình ILP/BIP phổ biến
-
--   **Bài toán Cái túi (Knapsack Problem - 0-1):** Chọn các vật phẩm (giá trị $v_j$, trọng lượng $w_j$) để tối đa tổng giá trị $\sum v_j x_j$ mà tổng trọng lượng $\sum w_j x_j \le b$, với $x_j \in \{0, 1\}$. Ứng dụng trong Lập ngân sách vốn (Capital Budgeting).
-    
--   **Bài toán Phủ tập hợp (Set Covering):** Chọn ít nhất một phương án để "phủ" các yêu cầu với chi phí tối thiểu $\sum_{j} c_j x_j$ s.t. $\sum_{j \in S_i} x_j \ge 1$ cho mỗi yêu cầu $i$, $x_j \in \{0, 1\}$. (Ví dụ: đồn cảnh sát).
-    
--   **Bài toán Định vị cơ sở (Facility Location):** Quyết định mở cơ sở ở đâu ($x_j \in \{0, 1\}$) và phân bổ khách hàng $i$ đến cơ sở $j$ ($y_{ij}$) thế nào để tối thiểu chi phí.
-    
--   **Bài toán Vận tải (Transportation):** Tối thiểu chi phí vận chuyển hàng từ nguồn $i$ (cung $r_i$) đến đích $j$ (cầu $d_j$). Biến $x_{ij}$ là lượng vận chuyển. Ràng buộc cung $\sum_j x_{ij} \le r_i$ và cầu $\sum_i x_{ij} \ge d_j$. Có thể là LP hoặc ILP. Bài toán cân bằng nếu $\sum r_i = \sum d_j$.
-    
--   **Kỹ thuật mô hình hóa nhị phân:**
-    
-    -   Ràng buộc phủ ($\sum x_i \ge 1$), đóng gói ($\sum x_i \le 1$), phân hoạch ($\sum x_i = 1$).
-        
-    -   Ràng buộc phụ thuộc ($x_i \le x_j$ - nếu chọn i thì phải chọn j).
-        
-    -   Ràng buộc "hoặc/hoặc", "nếu-thì".
-
-----------
 # Bài toán tính số nghiệm
 ## Dạng 1: Tìm số điểm cực biên (Extreme Points) TỐI ĐA
 
@@ -694,7 +675,25 @@ Mục tiêu là tìm các _đỉnh_ của miền khả thi (gọi là Nghiệm c
 
 
 ----------
+## 5. Một số mô hình ILP/BIP phổ biến
 
+-   **Bài toán Cái túi (Knapsack Problem - 0-1):** Chọn các vật phẩm (giá trị $v_j$, trọng lượng $w_j$) để tối đa tổng giá trị $\sum v_j x_j$ mà tổng trọng lượng $\sum w_j x_j \le b$, với $x_j \in \{0, 1\}$. Ứng dụng trong Lập ngân sách vốn (Capital Budgeting).
+    
+-   **Bài toán Phủ tập hợp (Set Covering):** Chọn ít nhất một phương án để "phủ" các yêu cầu với chi phí tối thiểu $\sum_{j} c_j x_j$ s.t. $\sum_{j \in S_i} x_j \ge 1$ cho mỗi yêu cầu $i$, $x_j \in \{0, 1\}$. (Ví dụ: đồn cảnh sát).
+    
+-   **Bài toán Định vị cơ sở (Facility Location):** Quyết định mở cơ sở ở đâu ($x_j \in \{0, 1\}$) và phân bổ khách hàng $i$ đến cơ sở $j$ ($y_{ij}$) thế nào để tối thiểu chi phí.
+    
+-   **Bài toán Vận tải (Transportation):** Tối thiểu chi phí vận chuyển hàng từ nguồn $i$ (cung $r_i$) đến đích $j$ (cầu $d_j$). Biến $x_{ij}$ là lượng vận chuyển. Ràng buộc cung $\sum_j x_{ij} \le r_i$ và cầu $\sum_i x_{ij} \ge d_j$. Có thể là LP hoặc ILP. Bài toán cân bằng nếu $\sum r_i = \sum d_j$.
+    
+-   **Kỹ thuật mô hình hóa nhị phân:**
+    
+    -   Ràng buộc phủ ($\sum x_i \ge 1$), đóng gói ($\sum x_i \le 1$), phân hoạch ($\sum x_i = 1$).
+        
+    -   Ràng buộc phụ thuộc ($x_i \le x_j$ - nếu chọn i thì phải chọn j).
+        
+    -   Ràng buộc "hoặc/hoặc", "nếu-thì".
+
+----------
 # Bài toán Phân công (Assignment Problem)
 
 ### 1. Mô tả bài toán 🎯
