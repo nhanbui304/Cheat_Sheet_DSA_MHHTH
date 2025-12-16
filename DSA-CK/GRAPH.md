@@ -1,5 +1,5 @@
 
-###1. Phân loại & Nhận biết Đồ thị (Quan trọng cho trắc nghiệm)Ngoài đồ thị vô hướng/có hướng cơ bản, bạn cần nắm vững:
+### 1. Phân loại & Nhận biết Đồ thị (Quan trọng cho trắc nghiệm)Ngoài đồ thị vô hướng/có hướng cơ bản, bạn cần nắm vững:
 
 * **Đồ thị Hai phía (Bipartite Graph):**
 * **Định nghĩa:** Có thể chia tập đỉnh thành 2 tập U, V rời nhau sao cho mọi cạnh đều nối 1 đỉnh thuộc U với 1 đỉnh thuộc V.
@@ -27,7 +27,7 @@
 
 ---
 
-###2. Mở rộng Thuật toán Tìm đường đi ngắn nhấtKhông chỉ có Dijkstra, bạn cần biết khi nào dùng cái gì:
+### 2. Mở rộng Thuật toán Tìm đường đi ngắn nhấtKhông chỉ có Dijkstra, bạn cần biết khi nào dùng cái gì:
 
 | Thuật toán | Đặc điểm | Độ phức tạp | Khi nào dùng? |
 | --- | --- | --- | --- |
@@ -41,7 +41,7 @@
 
 ---
 
-###3. Thành phần Liên thông & Cấu trúc đồ thị (Advanced DFS)Phần này dùng DFS cực nhiều để phân tích sâu cấu trúc đồ thị:
+### 3. Thành phần Liên thông & Cấu trúc đồ thị (Advanced DFS)Phần này dùng DFS cực nhiều để phân tích sâu cấu trúc đồ thị:
 
 * **Cầu (Bridge):** Là cạnh mà nếu xóa đi, số thành phần liên thông tăng lên (đồ thị bị đứt đôi).
 * **Khớp (Articulation Point):** Là đỉnh mà nếu xóa đi (cùng các cạnh kề), số thành phần liên thông tăng lên.
@@ -57,7 +57,7 @@
 
 ---
 
-###4. Phát hiện Chu trình (Cycle Detection) - Chi tiết* **Trên đồ thị Vô hướng:**
+### 4. Phát hiện Chu trình (Cycle Detection) - Chi tiết* **Trên đồ thị Vô hướng:**
 * Dùng DFS/BFS. Nếu gặp một đỉnh `v` đã thăm mà `v` không phải là cha trực tiếp (parent) của đỉnh đang xét `u` \rightarrow Có chu trình.
 * Dùng **DSU (Disjoint Set Union)**: Khi thêm cạnh (u, v), nếu u và v đã cùng chung một tập hợp cha \rightarrow Có chu trình.
 
@@ -70,7 +70,7 @@
 
 ---
 
-###5. Cây Khung (Spanning Tree) - So sánh Prim vs KruskalĐể tìm Cây khung nhỏ nhất (MST):
+### 5. Cây Khung (Spanning Tree) - So sánh Prim vs KruskalĐể tìm Cây khung nhỏ nhất (MST):
 
 * **Kruskal:**
 * Tư duy: Xếp cạnh từ nhỏ đến lớn, nhặt từng cạnh vào, dùng DSU để tránh tạo vòng.
@@ -86,7 +86,7 @@
 
 ---
 
-###6. Mẹo nhớ nhanh để "cứu cánh" trong phòng thi1. **Ma trận kề vs Danh sách kề:**
+### 6. Mẹo nhớ nhanh để "cứu cánh" trong phòng thi1. **Ma trận kề vs Danh sách kề:**
 * Ma trận kề tốn bộ nhớ V^2 \rightarrow Chỉ dùng khi V nhỏ (vài trăm). Check cạnh (u, v) mất O(1).
 * Danh sách kề tốn V+E \rightarrow Dùng cho V lớn (10^5). Check cạnh (u, v) có thể mất O(deg(u)).
 
@@ -102,14 +102,14 @@
 
 ###Tóm lại: Sơ đồ tư duy khi gặp bài toán Đồ thị1. **Đọc đề:** Có hướng hay vô hướng? Có trọng số hay không? Trọng số âm hay dương?
 2. **Kích thước:**
-* V \le 20: Có thể dùng đệ quy quay lui trâu bò, hoặc bitmask.
-* V \le 400: Floyd-Warshall (O(V^3)), Ma trận kề.
-* V \le 1000: Dijkstra O(V^2) (không cần Heap).
-* V \le 10^5: Danh sách kề + BFS/DFS/Dijkstra (Heap).
+* $V \le 20$: Có thể dùng đệ quy quay lui trâu bò, hoặc bitmask.
+* $V \le 400$: Floyd-Warshall (O(V^3)), Ma trận kề.
+* $V \le 1000$: Dijkstra O(V^2) (không cần Heap).
+* $V \le 10^5$: Danh sách kề + BFS/DFS/Dijkstra (Heap).
 
 
 3. **Yêu cầu:**
-* *Liên thông?* \rightarrow DFS/BFS/DSU.
-* *Ngắn nhất?* \rightarrow BFS (không trọng số), Dijkstra (trọng số +).
-* *Thứ tự trước sau?* \rightarrow Topo Sort.
-* *MST?* \rightarrow Kruskal.
+* *Liên thông?* $\rightarrow$ DFS/BFS/DSU.
+* *Ngắn nhất?* $\rightarrow$ BFS (không trọng số), Dijkstra (trọng số +).
+* *Thứ tự trước sau?* $\rightarrow$ Topo Sort.
+* *MST?* $\rightarrow$ Kruskal.
